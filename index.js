@@ -1,16 +1,15 @@
 const app = require('express')();
 const server = require('http').createServer(app);
-const io = require('socket.io')(server);
+const io = require('socket.io')(server, {
+    cors: {
+        origin: "https://fs-dashboard.adaptable.app",
+        methods: ["GET", "POST"]
+    }
+});
 
 const port = process.env.PORT || 5500;
 
 app.set('view engine', 'ejs');
-
-app.use(function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    next();
-});
 
 app.get('/', function(req, res) {
     const porta = process.env.PORT || 5500;
