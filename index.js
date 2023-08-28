@@ -2,13 +2,15 @@ const app = require('express')();
 const server = require('http').createServer(app);
 const io = require('socket.io')(server);
 
+io.set('origins', 'https://localhost:80');
+
 const port = process.env.PORT || 3000;
 
 app.set('view engine', 'ejs');
 
 app.get('/', function(req, res) {
     const porta = process.env.PORT || 3000;
-    var conn = "".concat("wss://localhost:", porta);
+    var conn = "".concat("ws://localhost:", porta);
     res.render('home', {port: conn});
 });
 
