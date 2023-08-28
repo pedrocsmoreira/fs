@@ -1,12 +1,15 @@
 const app = require('express')();
 const cors = require('cors');
 const server = require('http').createServer(app);
-const io = require('socket.io')(server);
+const io = require('socket.io')(server, {
+    allowRequest: (req, callback) => {
+        const noOriginHeader = req.headers.origin === undefined;
+        callback(null, noOriginHeader);
+    }
+});
 const port = process.env.PORT || 4000;
 
-app.use(cors({
-    origin: '*'
-  }));
+app.use(cors());
 
 app.set('view engine', 'ejs');
 
