@@ -1,21 +1,29 @@
 const app = require('express')();
+const cors = require('cors');
 const server = require('http').createServer(app);
 const io = require('socket.io')(server, {
     cors: {
-        origin: "*",
-        methods: ["GET", "POST"],
+        origins: ["*"],
+        handlePreflightRequest: (req, res) => {
+            res.writeHead(200, {
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Methods": "GET,POST",
+                "Access-Control-Allow-Headers": "my-custom-header",
+                "Access-Control-Allow-Credentials": true
+            });
+            res.end();
+        }
     }
 });
 
-io.set('origins', 'https://localhost');
+const port = process.env.PORT || 8080;
 
-const port = process.env.PORT || 3000;
+app.use(cors());
 
 app.set('view engine', 'ejs');
 
 app.get('/', function(req, res) {
-    const porta = process.env.PORT || 3000;
-    var conn = "".concat("https://localhost:", porta);
+    const conn = "".concat("ws://localhost:", port);
     res.render('home', {port: conn});
 });
 
@@ -26,6 +34,6 @@ io.on('connection', (socket) => {
     });
 });
 
-server.listen(port, '0.0.0.0', function() {
+server.listen(port, function() {
     console.log(`Listening on port ${port}`);
 });

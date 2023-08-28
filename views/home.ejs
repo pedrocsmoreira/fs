@@ -6,6 +6,7 @@
    <script src = "/socket.io/socket.io.js"></script>
    <body>
         <h1>FS Dashboard</h1>
+
         <ul>
 
         </ul>
@@ -17,7 +18,16 @@
    <script>
         var conn = JSON.parse('<%- JSON.stringify(port) %>');
 
-        const socket = io(conn);
+        const socket = io(conn, {
+            withCredentials: true,
+            transportOptions: {
+                polling: {
+                    extraHeaders: {
+                        "my-custom-header": "abcd"
+                    }
+                }
+            }
+        });
 
         socket.on('message', text => {
             const el = document.createElement('li');
