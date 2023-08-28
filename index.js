@@ -1,20 +1,18 @@
 const app = require('express')();
-const cors = require('cors');
 const server = require('http').createServer(app);
 const io = require('socket.io')(server, {
-    allowRequest: (req, callback) => {
-        const noOriginHeader = req.headers.origin === undefined;
-        callback(null, noOriginHeader);
+    cors: {
+        origin: "https://example.com",
+        methods: ["GET", "POST"]
     }
 });
-const port = process.env.PORT || 4000;
 
-app.use(cors());
+const port = process.env.PORT || 5500;
 
 app.set('view engine', 'ejs');
 
 app.get('/', function(req, res) {
-    const porta = process.env.PORT || 4000;
+    const porta = process.env.PORT || 5500;
     var conn = "".concat("ws://localhost:", porta);
     res.render('home', {port: conn});
 });
