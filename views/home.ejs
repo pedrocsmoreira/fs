@@ -18,7 +18,7 @@
    <script>
         var conn = JSON.parse('<%- JSON.stringify(port) %>');
 
-        const socket = io("https://fs-dashboard.adaptable.app/socket.io/?EIO=4&transport=polling&t=OeypeS1:80", {
+        const socket = io(conn, {
             withCredentials: true,
             transportOptions: {
                 polling: {
