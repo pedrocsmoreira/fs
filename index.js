@@ -8,7 +8,7 @@ app.set('view engine', 'ejs');
 
 app.get('/', function(req, res) {
     const porta = process.env.PORT || 3000;
-    var conn = "".concat("ws://localhost:", porta);
+    var conn = "".concat("wss://localhost:", porta);
     res.render('home', {port: conn});
 });
 
