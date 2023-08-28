@@ -15,9 +15,9 @@
    </body>
 
    <script>
-        document.querySelector('h1').innerHTML = port;
+        var conn = JSON.parse('<%- JSON.stringify(port) %>');
 
-        const socket = io('ws://localhost:4000');
+        const socket = io(conn);
 
         socket.on('message', text => {
             const el = document.createElement('li');
