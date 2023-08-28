@@ -4,7 +4,7 @@ const io = require('socket.io')(server);
 const port = process.env.PORT || 4000;
 
 app.get('/', function(req, res) {
-    res.sendFile(__dirname + '/index.html');
+    res.render('index.html', {port: port});
 });
 
 io.on('connection', (socket) => {
