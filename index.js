@@ -1,16 +1,19 @@
-const http = require('http').createServer();
+const app = require('express')();
+const server = require('http').createServer(app);
+const io = require('socket.io')(server);
+const port = process.env.PORT || 4000;
 
-const io = require('socket.io')(http, {
-    cors: { origin : "*"}
+app.get('/', function(req, res) {
+    res.sendFile(__dirname + '/index.html');
 });
 
 io.on('connection', (socket) => {
-    console.log('a user connected');
-
+    console.log('user connected');
     socket.on('message', (message) => {
-        console.log(message);
-        io.emit('message');
+        io.emit('message', message);
     });
 });
 
-http.listen(4000, () => console.log('listening on http://localhost:4000'));
+server.listen(port, function() {
+    console.log(`Listening on port ${port}`);
+});
