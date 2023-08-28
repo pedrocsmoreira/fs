@@ -7,7 +7,7 @@ const io = require('socket.io')(server, {
     }
 });
 
-io.set('origins', 'https://localhost:80');
+io.set('origins', 'https://localhost');
 
 const port = process.env.PORT || 3000;
 
